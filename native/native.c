@@ -41,9 +41,9 @@ __declspec(dllexport) bool HardwareRandomIsPresent()
         return 0;
     }
 
-    __cpuid(&cpuID, 1);
+    __cpuid(&cpuID, 7);
 
-    if (!((cpuID.EBX & 0x40000) == 0x40000))
+    if (!(cpuID.EBX & 0x40000) == 0x40000)
     {
         return 0;
     }

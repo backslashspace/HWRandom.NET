@@ -3,6 +3,9 @@ using System.Runtime.InteropServices;
 
 namespace BSS.Random
 {
+    /// <summary>
+    /// Allows you to directly call the RDSEED and RDRAND instruction from C# 
+    /// </summary>
     public static partial class HWRandom
     {
         /// <summary>
