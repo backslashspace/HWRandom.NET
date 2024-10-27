@@ -5,11 +5,7 @@ namespace Test_CLI_App
 {
     internal static class Program
     {
-     
-
-
-
-        private unsafe static void Main()
+        private static void Main()
         {
             if (!HWRandom.HardwareRandomIsPresent())
             {
@@ -17,34 +13,41 @@ namespace Test_CLI_App
                 Environment.Exit(-1);
             }
 
-            UInt64 val64 = 0;
-            UInt32 value32 = 0;
-            UInt16 value16 = 0;
-            Byte value8 = 0;
+            // define values
+            UInt64 _64RandomBits = 0;
+            UInt32 _32RandomBits = 0;
+            UInt16 _16RandomBits = 0;
+            Byte _8RandomBits = 0;
 
-            HWRandom.ReadRandom64(val64);
-            HWRandom.ReadRandom32(value32);
-            HWRandom.ReadRandom16(value16);
-            HWRandom.ReadRandom8(value8);
+            // fill values
+            HWRandom.ReadRandom64(_64RandomBits);
+            HWRandom.ReadRandom32(_32RandomBits);
+            HWRandom.ReadRandom16(_16RandomBits);
+            HWRandom.ReadRandom8(_8RandomBits);
 
-            Console.WriteLine("rand 64: " + val64);
-            Console.WriteLine("rand 32: " + value32);
-            Console.WriteLine("rand 16: " + value16);
-            Console.WriteLine("rand 8: " + value8);
+            Console.WriteLine("rand on 64 bit register: " + _64RandomBits);
+            Console.WriteLine("rand on 32 bit register: " + _32RandomBits);
+            Console.WriteLine("rand on 16 bit register: " + _16RandomBits);
+            Console.WriteLine("rand on 16 bit register (only 8 are returned by native function): " + _8RandomBits);
 
-            //
+            Console.WriteLine("\n\n");
 
-            HWRandom.ReadSeed64(val64);
-            HWRandom.ReadSeed32(value32);
-            HWRandom.ReadSeed16(value16);
-            HWRandom.ReadSeed8(value8);
+            HWRandom.ReadSeed64(_64RandomBits);
+            HWRandom.ReadSeed32(_32RandomBits);
+            HWRandom.ReadSeed16(_16RandomBits);
+            HWRandom.ReadSeed8(_8RandomBits);
 
-            Console.WriteLine("seed 64: " + val64);
-            Console.WriteLine("seed 32: " + value32);
-            Console.WriteLine("seed 16: " + value16);
-            Console.WriteLine("seed 8: " + value8);
+            Console.WriteLine("seed on 64 bit register: " + _64RandomBits);
+            Console.WriteLine("seed on 32 bit register: " + _32RandomBits);
+            Console.WriteLine("seed on 16 bit register: " + _16RandomBits);
+            Console.WriteLine("seed on 16 bit register (only 8 are returned by native function): " + _8RandomBits);
 
 
+            Byte[] bytes = new Byte[254];
+
+            HWRandom.NextBytes(bytes, 0, (UInt64)bytes.LongLength);
+
+            HWRandom.SeedNextBytes(bytes.AsSpan());
         }
     }
 }

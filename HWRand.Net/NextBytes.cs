@@ -118,10 +118,10 @@ namespace BSS.Random
         /// <summary>
         /// Fills the in-buffer with RDRAND
         /// </summary>
-        /// <remarks>Calls <see cref="NextSpanBytes(Span{Byte}, Int32, Int32)"/><br/><br/>Uses random bits from the pool, which is seeded by the conditioner. An upper bound of 511 128-bit samples will be generated per seed. That is, no more than 511*2=1022 sequential DRNG random numbers will be generated from the same seed value. - <see href="https://www.intel.com/content/www/us/en/developer/articles/guide/intel-digital-random-number-generator-drng-software-implementation-guide.html#inpage-nav-3-3">intel.com</see></remarks>
+        /// <remarks>Calls <see cref="NextBytes(Span{Byte}, Int32, Int32)"/><br/><br/>Uses random bits from the pool, which is seeded by the conditioner. An upper bound of 511 128-bit samples will be generated per seed. That is, no more than 511*2=1022 sequential DRNG random numbers will be generated from the same seed value. - <see href="https://www.intel.com/content/www/us/en/developer/articles/guide/intel-digital-random-number-generator-drng-software-implementation-guide.html#inpage-nav-3-3">intel.com</see></remarks>
         /// <param name="buffer">array to operate on</param>
         /// <returns>Indicated whether the operation succeeded or not (<see langword="bool"></see> success = <see langword="true"></see>) | will only return false if instruction fails 128 times in a row</returns>
-        public static Boolean NextSpanBytes(Span<Byte> buffer) => NextSpanBytes(buffer, 0, buffer.Length);
+        public static Boolean NextBytes(Span<Byte> buffer) => NextBytes(buffer, 0, buffer.Length);
         /// <summary>
         /// Fills the in-buffer with RDRAND
         /// </summary>
@@ -130,7 +130,7 @@ namespace BSS.Random
         /// <param name="offset">offset</param>
         /// <param name="count">count</param>
         /// <returns>Indicated whether the operation succeeded or not (<see langword="bool"></see> success = <see langword="true"></see>) | will only return false if instruction fails 128 times in a row</returns>
-        public static Boolean NextSpanBytes(Span<Byte> buffer, Int32 offset, Int32 count)
+        public static Boolean NextBytes(Span<Byte> buffer, Int32 offset, Int32 count)
         {
             if (offset + count > buffer.Length) return false;
 
@@ -262,10 +262,10 @@ namespace BSS.Random
         /// <summary>
         /// Fills the in-buffer with RDSEED
         /// </summary>
-        /// <remarks>Calls <see cref="SeedNextSpanBytes(Span{Byte}, Int32, Int32)"/><br/><br/>The seed values come directly from the entropy conditioner - <see href="https://www.intel.com/content/www/us/en/developer/articles/guide/intel-digital-random-number-generator-drng-software-implementation-guide.html#inpage-nav-5-8">intel.com</see></remarks>
+        /// <remarks>Calls <see cref="SeedNextBytes(Span{Byte}, Int32, Int32)"/><br/><br/>The seed values come directly from the entropy conditioner - <see href="https://www.intel.com/content/www/us/en/developer/articles/guide/intel-digital-random-number-generator-drng-software-implementation-guide.html#inpage-nav-5-8">intel.com</see></remarks>
         /// <param name="buffer">array to operate on</param>
         /// <returns>Indicated whether the operation succeeded or not (<see langword="bool"></see> success = <see langword="true"></see>) | will only return false if instruction fails 128 times in a row</returns>
-        public static Boolean SeedNextSpanBytes(Span<Byte> buffer) => SeedNextSpanBytes(buffer, 0, buffer.Length);
+        public static Boolean SeedNextBytes(Span<Byte> buffer) => SeedNextBytes(buffer, 0, buffer.Length);
         /// <summary>
         /// Fills the in-buffer with RDSEED
         /// </summary>
@@ -274,7 +274,7 @@ namespace BSS.Random
         /// <param name="offset">offset</param>
         /// <param name="count">count</param>
         /// <returns>Indicated whether the operation succeeded or not (<see langword="bool"></see> success = <see langword="true"></see>) | will only return false if instruction fails 128 times in a row</returns>
-        public static Boolean SeedNextSpanBytes(Span<Byte> buffer, Int32 offset, Int32 count)
+        public static Boolean SeedNextBytes(Span<Byte> buffer, Int32 offset, Int32 count)
         {
             if (offset + count > buffer.Length) return false;
 
