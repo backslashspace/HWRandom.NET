@@ -206,14 +206,6 @@
   <ItemGroup>
     <ClCompile Include="native.c" />
   </ItemGroup>
-  <ItemGroup>
-    <MASM Include="rdrand.asm">
-      <FileType>Document</FileType>
-    </MASM>
-    <MASM Include="rdseed.asm">
-      <FileType>Document</FileType>
-    </MASM>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />

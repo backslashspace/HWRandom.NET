@@ -1,4 +1,4 @@
-#include <intrin.h>
+#include <intrin.h> 
 
 #define bool unsigned __int8
 #define true 1
@@ -11,150 +11,92 @@
 
 // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-extern bool InternalReadRandom64(uint64* outValue);
-extern bool InternalReadRandom32(uint32* outValue);
-extern bool InternalReadRandom16(uint16* outValue);
-extern bool InternalReadRandom8(uint8* outValue);
-
-extern bool InternalReadSeed64(uint64* outValue);
-extern bool InternalReadSeed32(uint32* outValue);
-extern bool InternalReadSeed16(uint16* outValue);
-extern bool InternalReadSeed8(uint8* outValue);
-
-// # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
 typedef struct {
-    unsigned __int32 EAX;
-    unsigned __int32 EBX;
-    unsigned __int32 ECX;
-    unsigned __int32 EDX;
+    uint32 EAX;
+    uint32 EBX;
+    uint32 ECX;
+    uint32 EDX;
 } CPUID;
 
-__declspec(dllexport) bool HardwareRandomIsPresent()
+// 1 = all supported
+// 2 = only rdrand
+// 0 = none
+
+__declspec(dllexport) uint32 GetSupportedInstructions()
 {
-    CPUID cpuID;
+    CPUID cpuId = { 0, 0, 0, 0};
 
-    __cpuid(&cpuID, 1);
+    __cpuid(&cpuId, 1);
 
-    if (!((cpuID.ECX & 0x40000000) == 0x40000000))
-    {
-        return 0;
-    }
+    bool rdrand = (cpuId.ECX & ((uint32)1 << 30)) != 0;
 
-    __cpuid(&cpuID, 7);
+    __cpuid(&cpuId, 7);
 
-    if (!((cpuID.EBX & 0x40000) == 0x40000))
-    {
-        return 0;
-    }
+    bool rdseed = (cpuId.EBX & ((uint32)1 << 18)) != 0;
 
-    return 1;
+    if (rdseed) return 1;
+    if (!rdseed && rdrand) return 2;
+    return 0;
 }
 
 // # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-__declspec(dllexport) bool ReadRandom64(uint64* random)
+__declspec(dllexport) bool ReadSeed16(uint16* random)
 {
-    for (uint8 i = 0; i < 128; ++i)
+    for (uint16 i = 0; i < 128; ++i)
     {
-        if (InternalReadRandom64(random))
-        {
-            return true;
-        }
+        if (_rdseed16_step(random)) return 1;
     }
 
-    return false;
-}
-
-__declspec(dllexport) bool ReadRandom32(uint32* random)
-{
-    for (uint8 i = 0; i < 128; ++i)
-    {
-        if (InternalReadRandom32(random))
-        {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-__declspec(dllexport) bool ReadRandom16(uint16* random)
-{
-    for (uint8 i = 0; i < 128; ++i)
-    {
-        if (InternalReadRandom16(random))
-        {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-__declspec(dllexport) bool ReadRandom8(uint8* random)
-{
-    for (uint8 i = 0; i < 128; ++i)
-    {
-        if (InternalReadRandom8(random))
-        {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-// # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-__declspec(dllexport) bool ReadSeed64(uint64* random)
-{
-    for (uint8 i = 0; i < 128; ++i)
-    {
-        if (InternalReadSeed64(random))
-        {
-            return true;
-        }
-    }
-
-    return false;
+    return 0;
 }
 
 __declspec(dllexport) bool ReadSeed32(uint32* random)
 {
-    for (uint8 i = 0; i < 128; ++i)
+    for (uint16 i = 0; i < 128; ++i)
     {
-        if (InternalReadSeed32(random))
-        {
-            return true;
-        }
+        if (_rdseed32_step(random)) return 1;
     }
 
-    return false;
+    return 0;
 }
 
-__declspec(dllexport) bool ReadSeed16(uint16* random)
+__declspec(dllexport) bool ReadSeed64(uint64* random)
 {
-    for (uint8 i = 0; i < 128; ++i)
+    for (uint16 i = 0; i < 128; ++i)
     {
-        if (InternalReadSeed16(random))
-        {
-            return true;
-        }
+        if (_rdseed64_step(random)) return 1;
     }
 
-    return false;
+    return 0;
 }
 
-__declspec(dllexport) bool ReadSeed8(uint8* random)
+__declspec(dllexport) bool ReadRandom16(uint16* random)
 {
-    for (uint8 i = 0; i < 128; ++i)
+    for (uint16 i = 0; i < 128; ++i)
     {
-        if (InternalReadSeed8(random))
-        {
-            return true;
-        }
+        if (_rdrand16_step(random)) return 1;
     }
 
-    return false;
+    return 0;
+}
+
+__declspec(dllexport) bool ReadRandom32(uint32* random)
+{
+    for (uint16 i = 0; i < 128; ++i)
+    {
+        if (_rdrand32_step(random)) return 1;
+    }
+
+    return 0;
+}
+
+__declspec(dllexport) bool ReadRandom64(uint64* random)
+{
+    for (uint16 i = 0; i < 128; ++i)
+    {
+        if (_rdrand64_step(random)) return 1;
+    }
+
+    return 0;
 }

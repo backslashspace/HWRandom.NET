@@ -19,12 +19,4 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <MASM Include="rdseed.asm">
-      <Filter>Source Files</Filter>
-    </MASM>
-    <MASM Include="rdrand.asm">
-      <Filter>Source Files</Filter>
-    </MASM>
-  </ItemGroup>
 </Project>
