@@ -2,14 +2,14 @@
 
 #define true 1
 #define false 0
-#define bool unsigned __int8
+typedef unsigned __int8 bool;
 
-#define uint8 unsigned __int8
-#define uint32 unsigned __int32
-#define uint16 unsigned __int16
-#define uint64 unsigned __int64
+typedef unsigned __int8 uint8;
+typedef unsigned __int32 uint32;
+typedef unsigned __int16 uint16;
+typedef unsigned __int64 uint64;
 
-// # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+/*************************** CPU SUPPORT ****************************/
 
 typedef struct {
     uint32 EAX;
@@ -39,7 +39,7 @@ __declspec(dllexport) uint32 GetSupportedInstructions()
     return 0;
 }
 
-// # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+/***************************** NUMBERS ******************************/
 
 __declspec(dllexport) bool ReadSeed16(uint16* random)
 {
@@ -107,7 +107,7 @@ RETRY:
     else goto RETRY;
 }
 
-// # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+/***************************** BUFFERS ******************************/
 
 typedef union
 {
