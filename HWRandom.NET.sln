@@ -1,0 +1,66 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.35906.104
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Core Library (DLL)", "Core Library\Core Library.vcxproj", "{ABF6B55A-1C43-4568-AC94-BCCA805A0714}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NET 9 (DLL)", "NET 9\NET 9 (DLL).csproj", "{F9900712-6734-404B-8166-12A0EB4F815D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ABF6B55A-1C43-4568-AC94-BCCA805A0714} = {ABF6B55A-1C43-4568-AC94-BCCA805A0714}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NET Framework 4.8 (DLL)", "NET Framework 4.8\NET Framework 4.8 (DLL).csproj", "{41EBEC3E-7803-4367-BCB9-1F8F96F311B6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ABF6B55A-1C43-4568-AC94-BCCA805A0714} = {ABF6B55A-1C43-4568-AC94-BCCA805A0714}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test NET 9 (CLI)", "Test NET 9\Test NET 9 (CLI).csproj", "{465954D7-BF3D-4570-9879-38C47E21E2CA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ABF6B55A-1C43-4568-AC94-BCCA805A0714} = {ABF6B55A-1C43-4568-AC94-BCCA805A0714}
+		{F9900712-6734-404B-8166-12A0EB4F815D} = {F9900712-6734-404B-8166-12A0EB4F815D}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test NET Framework 4.8 (CLI)", "Test NET Framework 4.8\Test NET Framework 4.8 (CLI).csproj", "{91CEA0A9-C2C3-4F2C-9EDD-314F96307567}"
+	ProjectSection(ProjectDependencies) = postProject
+		{41EBEC3E-7803-4367-BCB9-1F8F96F311B6} = {41EBEC3E-7803-4367-BCB9-1F8F96F311B6}
+		{ABF6B55A-1C43-4568-AC94-BCCA805A0714} = {ABF6B55A-1C43-4568-AC94-BCCA805A0714}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
+	ProjectSection(SolutionItems) = preProject
+		AOT-Static-Linking.txt = AOT-Static-Linking.txt
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ABF6B55A-1C43-4568-AC94-BCCA805A0714}.Debug|x64.ActiveCfg = Debug|x64
+		{ABF6B55A-1C43-4568-AC94-BCCA805A0714}.Release|x64.ActiveCfg = Release|x64
+		{ABF6B55A-1C43-4568-AC94-BCCA805A0714}.Release|x64.Build.0 = Release|x64
+		{F9900712-6734-404B-8166-12A0EB4F815D}.Debug|x64.ActiveCfg = Debug|x64
+		{F9900712-6734-404B-8166-12A0EB4F815D}.Release|x64.ActiveCfg = Release|x64
+		{F9900712-6734-404B-8166-12A0EB4F815D}.Release|x64.Build.0 = Release|x64
+		{41EBEC3E-7803-4367-BCB9-1F8F96F311B6}.Debug|x64.ActiveCfg = Debug|x64
+		{41EBEC3E-7803-4367-BCB9-1F8F96F311B6}.Release|x64.ActiveCfg = Release|x64
+		{41EBEC3E-7803-4367-BCB9-1F8F96F311B6}.Release|x64.Build.0 = Release|x64
+		{465954D7-BF3D-4570-9879-38C47E21E2CA}.Debug|x64.ActiveCfg = Debug|x64
+		{465954D7-BF3D-4570-9879-38C47E21E2CA}.Debug|x64.Build.0 = Debug|x64
+		{465954D7-BF3D-4570-9879-38C47E21E2CA}.Release|x64.ActiveCfg = Release|x64
+		{465954D7-BF3D-4570-9879-38C47E21E2CA}.Release|x64.Build.0 = Release|x64
+		{91CEA0A9-C2C3-4F2C-9EDD-314F96307567}.Debug|x64.ActiveCfg = Debug|x64
+		{91CEA0A9-C2C3-4F2C-9EDD-314F96307567}.Debug|x64.Build.0 = Debug|x64
+		{91CEA0A9-C2C3-4F2C-9EDD-314F96307567}.Release|x64.ActiveCfg = Release|x64
+		{91CEA0A9-C2C3-4F2C-9EDD-314F96307567}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C6936FE6-5C12-4DB0-A0C9-9555A15D7090}
+	EndGlobalSection
+EndGlobal

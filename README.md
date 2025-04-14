@@ -1,82 +1,84 @@
-# HWRand.Net
-
-A small .Net Framework 4.8 library that allows you to *directly* call your CPUs RDRAND and RDSEED instructions, this is done by calling a C wrapper for x86-64 assembly with P/Invoke.
+A library that allows you to call your CPUs RDRAND and RDSEED instructions, by calling native C x86-64 intrinsic functions.
 
 ## Features
 
+- Supports .NET 9 & .NET Framework 4.8
 - No direct heap allocations (only static functions)
 - easy to use
-- Span support via `System.Memory`
+- fast
+- supports static linking for newer .NET versions (AOT)
+- Span support via `System.Memory` in .NET Framework
 - easy compatibility check via build-in function that uses `CPUID`
 
-## How to Use
+## Examples
 
 #### To check compatibility
 ```
-if (HWRandom.HardwareRandomIsPresent())
+switch (HWRandom.GetSupportedInstructions())
 {
-    Console.WriteLine("CPU compatible!");
-    Worker.Start();
+    case HWRandom.SupportedInstructions.None:
+        Console.WriteLine("Not supported!");
+        return;
 
-    Environment.Exit(0);
-}
-else
-{
-    Console.WriteLine("RDRAND/RDSEED instruction NOT available on CPU!");
-    Environment.Exit(-1);
+    case HWRandom.SupportedInstructions.RDRAND:
+        Console.WriteLine("Only RDRAND supported!");
+        return;
+
+    case HWRandom.SupportedInstructions.All:
+        Console.WriteLine("Fully supported.");
+        break;
 }
 ```
 
 #### To get random numbers form the DRNG pool (RDRAND)
 ```
 // define values
-UInt64 _64RandomBits = 0;
-UInt32 _32RandomBits = 0;
-UInt16 _16RandomBits = 0;
-Byte _8RandomBits = 0;
+UInt64 random64 = 0;
+UInt32 random32 = 0;
+UInt16 random16 = 0;
 
-// fill values
-HWRandom.ReadRandom64(_64RandomBits);
-HWRandom.ReadRandom32(_32RandomBits);
-HWRandom.ReadRandom16(_16RandomBits);
-HWRandom.ReadRandom8(_8RandomBits);
+// fill values (passed reference)
+HWRandom.ReadRandom64(random64);
+HWRandom.ReadRandom32(random32);
+HWRandom.ReadRandom16(random16);
 
-Console.WriteLine("rand on 64 bit register: " + _64RandomBits);
-Console.WriteLine("rand on 32 bit register: " + _32RandomBits);
-Console.WriteLine("rand on 16 bit register: " + _16RandomBits);
-Console.WriteLine("rand on 16 bit register (only 8 are returned by native function): " + _8RandomBits);
+Console.WriteLine("rdrand on 64 bit register: " + random64);
+Console.WriteLine("rdrand on 32 bit register: " + random32);
+Console.WriteLine("rdrand on 16 bit register: " + random16);
 ```
 
 #### To get random numbers form the ENRNG (RDSEED)
 ```
 // define values
-UInt64 _64RandomBits = 0;
-UInt32 _32RandomBits = 0;
-UInt16 _16RandomBits = 0;
-Byte _8RandomBits = 0;
+UInt64 random64 = 0;
+UInt32 random32 = 0;
+UInt16 random16 = 0;
 
-// fill values
-HWRandom.ReadSeed64(_64RandomBits);
-HWRandom.ReadSeed32(_32RandomBits);
-HWRandom.ReadSeed16(_16RandomBits);
-HWRandom.ReadSeed8(_8RandomBits);
+// fill values (passed reference)
+HWRandom.ReadSeed64(random64);
+HWRandom.ReadSeed32(random32);
+HWRandom.ReadSeed16(random16);
 
-Console.WriteLine("seed on 64 bit register: " + _64RandomBits);
-Console.WriteLine("seed on 32 bit register: " + _32RandomBits);
-Console.WriteLine("seed on 16 bit register: " + _16RandomBits);
-Console.WriteLine("seed on 16 bit register (only 8 are returned by native function): " + _8RandomBits);
+Console.WriteLine("rdseed on 64 bit register: " + random64);
+Console.WriteLine("rdseed on 32 bit register: " + random32);
+Console.WriteLine("rdseed on 16 bit register: " + random16);
 ```
 
-#### To fill a buffer
+#### Fill Buffers
 ```
-Byte[] bytes = new Byte[254];
+Byte[] normalBytes = new Byte[254];
 
 // use RDRAND to fill buffer
-HWRandom.NextBytes(bytes, 0, (UInt64)bytes.LongLength);
+HWRandom.NextBytes(ref bytes, 0ul, 256ul);
 
-// use RDSEED to fill buffer
-HWRandom.SeedNextBytes(bytes.AsSpan());
+Span<Byte> spanBytes = stackalloc Byte[1024];
+
+// use RDSEED to fill stack buffer
+HWRandom.SeedNextBytes(ref spanBytes, 0ul, 1024ul);
 ```
+
+*Use the native.lib for static linking, more info in file [AOT-Static-Linking.txt](./AOT-Static-Linking.txt)*
+
 ---
 
 [Intel® Digital Random Number Generator (DRNG) Software Implementation Guide](https://www.intel.com/content/www/us/en/developer/articles/guide/intel-digital-random-number-generator-drng-software-implementation-guide.html)

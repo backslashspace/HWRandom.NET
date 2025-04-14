@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>NET9.0-windows10.0.26100.0</TargetFramework>
+    <RootNamespace>Test_NET_9</RootNamespace>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PublishAot>true</PublishAot>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <Platforms>x64</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="libs\**" />
+	  <EmbeddedResource Remove="libs\**" />
+	  <None Remove="libs\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="HWRandom.NET">
+			<HintPath>libs\HWRandom.NET.dll</HintPath>
+		</Reference>
+		<DirectPInvoke Include="native" />
+		<NativeLibrary Include="libs\native.lib" />
+		<LinkerArg Include="/LTCG /FIXED:NO /NXCOMPAT /DYNAMICBASE /LARGEADDRESSAWARE /CETCOMPAT" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="native.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
+</Project>

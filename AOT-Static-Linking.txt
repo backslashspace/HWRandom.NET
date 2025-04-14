@@ -1,0 +1,10 @@
+https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot/interop
+
+<ItemGroup>
+		<Reference Include="HWRandom.NET">
+			<HintPath>libs\HWRandom.NET.dll</HintPath>
+		</Reference>
+		<DirectPInvoke Include="native" />
+		<NativeLibrary Include="libs\native.lib" />
+		<LinkerArg Include="/LTCG /FIXED:NO /NXCOMPAT /DYNAMICBASE /LARGEADDRESSAWARE /CETCOMPAT" />
+</ItemGroup>
