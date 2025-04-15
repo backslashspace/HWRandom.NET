@@ -10,16 +10,11 @@
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <AssemblyName>HWRandom.NET</AssemblyName>
     <Platforms>x64</Platforms>
-    <AssemblyVersion>1.2.0.0</AssemblyVersion>
-    <FileVersion>1.2.0.0</FileVersion>
-    <Version>1.2.0.0</Version>
     <PackageId></PackageId>
     <Company></Company>
     <Authors></Authors>
-    <Product>HWRandom.NET Library</Product>
     <Description></Description>
     <PackageReleaseNotes></PackageReleaseNotes>
-	<AssemblyTitle>.NET 9 Wrapper for native.dll</AssemblyTitle>
     <Title></Title>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
@@ -28,6 +23,7 @@
     <IsTrimmable>True</IsTrimmable>
     <IsAotCompatible>True</IsAotCompatible>
     <IsPublishable>False</IsPublishable>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -35,10 +31,13 @@
     <IsAotCompatible>True</IsAotCompatible>
     <IsPublishable>False</IsPublishable>
     <DebugType>none</DebugType>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Properties\" />
+    <Compile Remove="__2.0.0.0\**" />
+    <EmbeddedResource Remove="__2.0.0.0\**" />
+    <None Remove="__2.0.0.0\**" />
   </ItemGroup>
 
 </Project>

@@ -27,13 +27,13 @@
 		<Reference Include="HWRandom.NET">
 			<HintPath>libs\HWRandom.NET.dll</HintPath>
 		</Reference>
-		<DirectPInvoke Include="native" />
-		<NativeLibrary Include="libs\native.lib" />
+		<DirectPInvoke Include="HWRandomCore" />
+		<NativeLibrary Include="libs\HWRandomCore.lib" />
 		<LinkerArg Include="/LTCG /FIXED:NO /NXCOMPAT /DYNAMICBASE /LARGEADDRESSAWARE /CETCOMPAT" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Update="native.dll">
+	  <None Update="HWRandomCore.dll">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>

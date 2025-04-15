@@ -5,11 +5,11 @@ namespace BSS.Random
 {
     public static partial class HWRandom
     {
-        [DllImport("native.dll", EntryPoint = "SeedNextBytes", SetLastError = false)]
+        [DllImport("HWRandomCore", EntryPoint = "SeedNextBytes", SetLastError = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private unsafe static extern Boolean InternalSeedNextBytes(Byte* buffer, UInt64 offset, UInt64 count);
 
-        [DllImport("native.dll", EntryPoint = "NextBytes", SetLastError = false)]
+        [DllImport("HWRandomCore", EntryPoint = "NextBytes", SetLastError = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private unsafe static extern Boolean InternalNextBytes(Byte* buffer, UInt64 offset, UInt64 count);
 
@@ -49,7 +49,7 @@ namespace BSS.Random
             }
         }
 
-        //  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #
+        /********************************************************************/
 
         /// <summary>
         /// Fills a buffer with RDRAND

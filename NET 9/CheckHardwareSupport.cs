@@ -8,7 +8,7 @@ namespace BSS.Random
     /// </summary>
     public static partial class HWRandom
     {
-        [LibraryImport("native.dll", EntryPoint = "GetSupportedInstructions", SetLastError = false)]
+        [LibraryImport("HWRandomCore", EntryPoint = "GetSupportedInstructions", SetLastError = false)]
         [return: MarshalAs(UnmanagedType.U4)]
         private static partial UInt32 InternalGetSupportedInstructions();
 
